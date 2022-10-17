@@ -45,11 +45,18 @@
         {
             foreach(Employee employee in employeeList)
             {
-                var daysUntilBirthday = GetDaysUntilBirthday(employee.Birthday):
+                var daysUntilBirthday = GetDaysUntilBirthday(employee.Birthday);
                 Console.WriteLine($"Employee {employee.Name} makes {employee.Salary} " +
                     $"and was born on {employee.Birthday.ToShortDateString()}. +" +
                     $"It will be {daysUntilBirthday} days until their next birthday.");
             }
+        }
+
+        public static List<Employee> RemoveEmployee(List<Employee> employeeList, string name)
+        {
+                var employeeToRemove = employeeList.First(item => item.Name == name);
+                employeeList.Remove(employeeToRemove);
+                return employeeList;           
         }
 
         public static int GetDaysUntilBirthday(DateTime birthday)
@@ -61,9 +68,6 @@
             }
 
             return (nextBirthday - DateTime.Today).Days;
-        }
-
-        
-
+        }    
     }
 }

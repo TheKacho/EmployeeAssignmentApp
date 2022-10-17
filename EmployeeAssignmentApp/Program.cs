@@ -1,5 +1,6 @@
 ﻿using EmployeeAssignmentApp;
-using System.Linq;
+using System.Text.Json;
+
 // now, we need to make  a menu with each process and save input data from user
 // instead of going through the process everytime on startup
 Console.WriteLine("Welcome to the employee program. Please choose the following:");
@@ -9,6 +10,16 @@ Console.WriteLine("3: Remove employee by name");
 Console.WriteLine("4: exit program");
 
 List<Employee> employees = new List<Employee>();
+
+var options = new JsonSerializerOptions
+{
+    PropertyNameCaseInsensitive = true
+};
+
+// assigns text to the directed json file within the project folder
+var filetext = File.ReadAllText("employees.json");
+var deserialized = JsonSerializer.Deserialize<List<Employee>>(filetext, options);
+employees.AddRange(deserialized);
 
 string userInput = Console.ReadLine();
 
@@ -36,6 +47,9 @@ while (userInput != "4")
     userInput = Console.ReadLine();
 }
 
+//this writes employees data to a json file
+var json = JsonSerializer.Serialize(employees);
+File.WriteAllText("employees.json", json)
 
 
 //void ClearConsole()
@@ -126,3 +140,4 @@ while (userInput != "4")
 //        Console.WriteLine($"{name} has been removed from the list.");
 //    }
 //}
+;
